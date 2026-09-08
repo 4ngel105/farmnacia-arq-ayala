@@ -74,7 +74,6 @@ public class CalculadoraDeDescuentos
 // Ahora: cada tarea vive en su propia clase y GestorDePedidos solo coordina.
 // Refactor: Roberto Angel Ayala Lecoña
 
-
 public class Pedido
 {
     public string Cliente { get; }
@@ -102,7 +101,7 @@ public class RepositorioPedidosMySql
                              $"'{pedido.Medicamento}', {pedido.Cantidad}, {totalFinal})");
 }
 
-//  presentar el comprobante.
+//  Presentar el comprobante.
 public class ImpresoraDeComprobante
 {
     public void Imprimir(Pedido pedido, decimal totalFinal)
@@ -112,4 +111,11 @@ public class ImpresoraDeComprobante
         Console.WriteLine($"Cliente: {pedido.Cliente} ({pedido.TipoCliente})");
         Console.WriteLine($"TOTAL: {totalFinal:0.00} Bs");
     }
+}
+
+// notificar.
+public class NotificadorPorCorreo
+{
+    public void Notificar(Pedido pedido)
+        => Console.WriteLine($"[SMTP] Su pedido de {pedido.Medicamento} fue registrado, {pedido.Cliente}");
 }
