@@ -36,3 +36,34 @@ public class DescuentoConvenio : IPoliticaDeDescuento
     public string TipoCliente => "convenio";
     public decimal CalcularDescuento(decimal total) => total * 0.10m;
 }
+
+// Ejemplo de extensión SIN modificar nada de lo anterior
+public class DescuentoTerceraEdad : IPoliticaDeDescuento
+{
+    public string TipoCliente => "tercera edad";
+    public decimal CalcularDescuento(decimal total) => total * 0.25m;
+}
+
+public class CalculadoraDeDescuentos
+{
+    private readonly IEnumerable<IPoliticaDeDescuento> _politicas;
+
+    public CalculadoraDeDescuentos(IEnumerable<IPoliticaDeDescuento> politicas)
+        => _politicas = politicas;
+
+    public static CalculadoraDeDescuentos PorDefecto() => new(new IPoliticaDeDescuento[]
+    {
+        new DescuentoParticular(),
+        new DescuentoAsegurado(),
+        new DescuentoConvenio(),
+        new DescuentoTerceraEdad()
+    });
+
+    public decimal Calcular(string tipoCliente, decimal total)
+    {
+        var politica = _politicas.FirstOrDefault(
+            p => p.TipoCliente.Equals(tipoCliente, StringComparison.OrdinalIgnoreCase));
+       
+        return politica?.CalcularDescuento(total) ?? 0m;
+    }
+}
