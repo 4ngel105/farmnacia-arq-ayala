@@ -119,3 +119,34 @@ public class NotificadorPorCorreo
     public void Notificar(Pedido pedido)
         => Console.WriteLine($"[SMTP] Su pedido de {pedido.Medicamento} fue registrado, {pedido.Cliente}");
 }
+
+// Ya no calcula, ni guarda, ni imprime, ni envía llama a las clases  correspondientes .
+public class GestorDePedidos
+{
+    private readonly CalculadoraDeDescuentos _calculadora;
+    private readonly RepositorioPedidosMySql _repositorio;
+    private readonly ImpresoraDeComprobante _impresora;
+    private readonly NotificadorPorCorreo _notificador;
+
+    public GestorDePedidos(
+        CalculadoraDeDescuentos calculadora,
+        RepositorioPedidosMySql repositorio,
+        ImpresoraDeComprobante impresora,
+        NotificadorPorCorreo notificador)
+    {
+        _calculadora = calculadora;
+        _repositorio = repositorio;
+        _impresora = impresora;
+        _notificador = notificador;
+    }
+
+    public void ProcesarPedido(Pedido pedido)
+    {
+        decimal descuento = _calculadora.Calcular(pedido.TipoCliente, pedido.Subtotal);
+        decimal totalFinal = pedido.Subtotal - descuento;
+
+        _repositorio.Guardar(pedido, totalFinal);
+        _impresora.Imprimir(pedido, totalFinal);
+        _notificador.Notificar(pedido);
+    }
+}
