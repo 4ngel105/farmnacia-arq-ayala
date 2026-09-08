@@ -67,3 +67,49 @@ public class CalculadoraDeDescuentos
         return politica?.CalcularDescuento(total) ?? 0m;
     }
 }
+
+// CURA 2 
+// Antes: ProcesarPedido calculaba, guardaba, imprimía y notificaba: cuatro
+// razones para cambiar en un solo método.
+// Ahora: cada tarea vive en su propia clase y GestorDePedidos solo coordina.
+// Refactor: Roberto Angel Ayala Lecoña
+
+
+public class Pedido
+{
+    public string Cliente { get; }
+    public string TipoCliente { get; }
+    public string Medicamento { get; }
+    public int Cantidad { get; }
+    public decimal PrecioUnitario { get; }
+
+    public Pedido(string cliente, string tipoCliente, string medicamento, int cantidad, decimal precioUnitario)
+    {
+        Cliente = cliente;
+        TipoCliente = tipoCliente;
+        Medicamento = medicamento;
+        Cantidad = cantidad;
+        PrecioUnitario = precioUnitario;
+    }
+
+    public decimal Subtotal => Cantidad * PrecioUnitario;
+}
+
+public class RepositorioPedidosMySql
+{
+    public void Guardar(Pedido pedido, decimal totalFinal)
+        => Console.WriteLine($"[MYSQL] INSERT INTO pedidos VALUES ('{pedido.Cliente}', " +
+                             $"'{pedido.Medicamento}', {pedido.Cantidad}, {totalFinal})");
+}
+
+//  presentar el comprobante.
+public class ImpresoraDeComprobante
+{
+    public void Imprimir(Pedido pedido, decimal totalFinal)
+    {
+        Console.WriteLine("----- COMPROBANTE -----");
+        Console.WriteLine($"{pedido.Cantidad} x {pedido.Medicamento}");
+        Console.WriteLine($"Cliente: {pedido.Cliente} ({pedido.TipoCliente})");
+        Console.WriteLine($"TOTAL: {totalFinal:0.00} Bs");
+    }
+}
