@@ -10,7 +10,7 @@ namespace FuerzaAndina.Cobrosñ{
         string Nombre { get; }
         decimal CalcularMonto(int horas, decimal tarifaBasePorHora);
     }
-     // Manana: tarifa plena, sin ajustes. -ROBERTO AYALA LECOÑA
+     // Manana: tarifa plena sin ajustes. -ROBERTO AYALA LECOÑA
     public class TarifaManana : ITarifaStrategy
     {
         public string Nombre => "Manana (tarifa plena)";
@@ -31,7 +31,7 @@ namespace FuerzaAndina.Cobrosñ{
             return horas * tarifaBasePorHora * RECARGO;
         }
 
- // Fin de semana: descuento del 30% con tope de 3 horas cobrables.  -ROBERTO AYALA LECOÑA
+ // Fin de semana: descuento del 30% con tope de 3 horas .  -ROBERTO AYALA LECOÑA
     public class TarifaFinDeSemana : ITarifaStrategy
     {
         private const decimal DESCUENTO = 0.70m;
