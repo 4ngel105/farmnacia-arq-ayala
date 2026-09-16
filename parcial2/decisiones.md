@@ -22,4 +22,13 @@ dueño cambia la regla de temporada en cobros y cotizaciones sigue cotizando mal
 de un contrato único (ITarifaStrategy) y tanto cobros como cotizaciones lo
 consumen, eliminando el if/else duplicado.
 
+**Patrón: Strategy**
+
+## Situación 3 — Pasarela de pago externa
+
+El SDK no es modificable y habla un idioma ajeno al dominio: inglés, montos en
+centavos y customerToken , la conversión Bs→centavos y el manejo de tokens quedan regados
+por el módulo de membresías, y cambiar de proveedor el próximo año obliga a tocar
+todo ese código en vez de escribir un adapter nuevo.
+
 
