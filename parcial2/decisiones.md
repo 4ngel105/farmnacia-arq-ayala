@@ -31,4 +31,8 @@ centavos y customerToken , la conversión Bs→centavos y el manejo de tokens qu
 por el módulo de membresías, y cambiar de proveedor el próximo año obliga a tocar
 todo ese código en vez de escribir un adapter nuevo.
 
+El Adapter implementa mi contrato
+(IPasarelaPago.CobrarMembresia(socio, montoBs)) y por dentro traduce a
+ChargeCard(amountCents, currencyIso, customerToken).
 
+**Patrón: Adapter**
