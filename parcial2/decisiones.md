@@ -38,10 +38,10 @@ ChargeCard(amountCents, currencyIso, customerToken).
 **Patrón: Adapter**
 
 
-## P2.3 — La conexión SOLID (sobre la implementación de la Situación 2)
+## La conexión SOLID (sobre la implementación de la Situación 2)
 
 El principio que rescata mi implementación es OCP (Open/Closed Principle).
-Se ve en que CalculadoraCobro recibe una`ITarifaStrategy por constructor y no
-contiene ni un solo `if` de franja horaria: agregar una `TarifaFeriado` el próximo
+Se ve en que CalculadoraCobro recibe una ITarifaStrategy por constructor y no
+contiene ni un solo if de franja horaria: agregar una `TarifaFeriado` el próximo
 feriado es crear una clase nueva que implemente el contrato, sin abrir ni
 recompilar la calculadora ni el módulo de cotizaciones.
